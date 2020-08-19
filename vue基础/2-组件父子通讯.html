@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-html='msg'></div>
+        <h1 v-text='tt'></h1>
+        <demo2 title="组件标题" :content='tt' @parentevent='fn'>
+            <input type="text">
+            <button>click</button>
+        </demo2>
+    </div>
+    <template id="temp">
+        <div>
+            <h2>{{title}}</h2>
+            <h3>{{content}}</h3>
+            <slot ></slot>
+            <button @click='childhandle(dd)'>子组件点击</button>
+        </div>
+    </template>
+    <script src="./vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                msg: '<h1>这是组件</h1>',
+                tt:'content'
+            },
+            methods:{
+                fn(msg){
+                    console.log('msg',msg)
+                    this.tt=msg
+                }
+            },
+            components: {
+                'demo2': {
+                    template: '#temp',
+                    data() {
+                        return {
+                            dd:'我是子组件传的参数'
+                        }
+                    },
+                    props: {
+                        title: String,
+                        content: {
+                            type: String,
+                            default: 100
+                        }
+                    },
+                    methods:{
+                        childhandle(dd){
+                            this.$emit('parentevent',dd)
+                        }
+                    }
+                }
+
+            }
+        })
+    </script>
+</body>
+
+</html>

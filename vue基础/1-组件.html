@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <demo></demo>
+        <demo></demo> -->
+        <<!-- demo2 :title="10" content='专业者开发社区'></demo2> -->
+        <demo2 title="CSDN" content='eglish' @parentevent='fn'>
+            <input type="text">
+            <button>click</button>
+        </>
+    </div>
+    <template id="temp">
+        <div>
+            <h2>{{title}}</h2>
+            <div>{{content}}</div>
+            <slot></slot>
+            <hr>
+            <button @click='clickhandle'>点击</button>
+
+        </div>
+    </template>
+
+    <script src="./vue.js"></script>
+    <script>
+        // Vue.component('demo',{
+        //     template:'<h1>{{msg}}</h1>',
+        //     data(){
+        //         return{
+        //             msg:'我是组件一全局'
+        //         }
+        //     }
+        // })
+        new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods:{
+                fn(msg){
+                    console.log('msg',msg)
+                }
+            },
+            components: {
+                'demo2': {
+                    template: '#temp',
+                    /* props:['title','content'] */
+                    props:{
+                        title:String,
+                        content:{
+                            type:String,
+                            default:'我是谁'
+                        }
+                    },
+                    methods:{
+                        clickhandle(){
+                            this.$emit('parentevent','我是子组件')
+                        }
+                    }
+                },
+                
+            }
+        })
+    </script>
+</body>
+
+</html>

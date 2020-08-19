@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>源字符串{{msg}}</h1>
+        <h1>computed反转字符串：{{reverseMsg}}</h1>
+        <h1>methods反转字符串：{{reverseMethod()}}</h1>
+        <h1>firstName:{{firstName}}</h1>
+        <h1>LastName:{{lastName}}</h1>
+        <h1>fullName:{{fullName}}</h1>
+        <button @click='change()'> click</button>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        /*computed vs methods
+            我们可以使用methods来代替computed,效果上两个都是一样的，但是computed是记忆他的依赖缓存，只有相关依赖改变时才会重新取值。而使用methods，在重新渲染的时候，函数总会重新调用执行*/
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'CSDN',
+                firstName: 'zhang',
+                lastName: 'san'
+            },
+            computed: {
+                //计算属性在粗合理一下逻是很有用的，计算属性结果会被缓存，除非依赖的响应式property变化才会重新计算。
+                //computed 默认情况下下只走get
+                reverseMsg() {
+                    return this.msg.split('').reverse().join('')
+                },
+                // fullName(){
+                //     return `${this.firstName} ${this.lastName}`
+                // },
+                fullName: {
+                    get() {
+                        return `${this.firstName} ${this.lastName}`
+                    },
+                    set(newValue) {
+                        let name = newValue.split(' ');
+                        this.firstName = name[0];
+                            this.lastName = name[1];
+                    }
+                },
+            },
+            methods: {
+                reverseMethod() {
+                    return this.msg.split('').reverse().join('')
+                },
+                change() {
+                    this.fullName = 'LI SI'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

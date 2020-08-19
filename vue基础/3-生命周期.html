@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h2 id='title'>{{count}}</h2>
+        <button @click='count++'>点击</button>
+        <button @click='des'>销毁</button>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                count: 0
+            },
+            methods:{
+                des(){
+                    vm.$destroy()
+                }
+            },
+            beforeCreate(){
+                console.log('beforecreated',this.$el,this.$data)
+            },
+            created(){
+                console.log('created',this.$el,this.$data)
+            },
+            beforeMount(){
+                console.log('beforeMount',this.$el,this.$data)
+            },
+            mounted(){
+                console.log('mounted',this.$el,this.$data)
+            },
+            beforeUpdate(){
+                console.log('beforUpdate',document.getElementById('title').innerHTML,this.$data)
+            },
+            updated(){
+                console.log('updated',document.getElementById('title').innerHTML,this.$data)
+            },
+            beforeDestroy(){
+                console.log('beforDestroy')
+            },
+            destroyed(){
+                console.log('destroyed')
+            }
+        })
+    </script>
+</body>
+
+</html>

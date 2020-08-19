@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{count}}
+        <button @click='count++'>click</button>
+        <hr>
+        千米 <input type="text" v-model='kilometers'>
+        米 <input type="text" v-model='meters'>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                count: 0,
+                kilometers: 0,
+                meters: 0
+            },
+            watch: {
+                kilometers() {
+                    this.meters = this.kilometers * 1000
+                },
+                meters() {
+                    this.kilometers = this.meters / 1000
+                },
+                count(newValue, oldValue){
+                    console.log(newValue, oldValue)
+                }
+            }
+        })
+        // vm.$watch('count', function (newValue, oldValue) {
+        //     console.log(newValue, oldValue)
+        // })
+    </script>
+</body>
+
+</html>
